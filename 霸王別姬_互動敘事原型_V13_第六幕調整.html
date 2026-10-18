@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101012">
+<title>霸王別姬｜互動敘事</title>
+<style>
+
+:root{--ink:#101012;--paper:#e8e2d2;--red:#bd1e1e;--teal:#1e7b75;--gold:#c9a86a;--ease:cubic-bezier(.2,.72,.2,1)}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:"Noto Serif TC","Songti TC","PMingLiU",serif}button{font:inherit;color:inherit}.viewport{position:fixed;inset:0;overflow:hidden;perspective:1300px;perspective-origin:50% 50%;background:radial-gradient(ellipse at 50% 45%,#282324,#111113 62%,#09090a);touch-action:none;user-select:none}.world{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1.5s var(--ease)}.scene{position:absolute;inset:0;transform-style:preserve-3d;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .6s ease,filter .6s ease}.scene.active{visibility:visible;opacity:1;pointer-events:auto}.scene.leaving{visibility:visible;opacity:0;pointer-events:none}.scene-stage{position:absolute;width:min(100vw,177.7778vh);height:min(100vh,56.25vw);left:50%;top:50%;transform:translate(-50%,-50%);transform-style:preserve-3d;overflow:visible;isolation:isolate;background:radial-gradient(ellipse at 62% 46%,#292323,#151416 61%,#0c0c0e)}.scene-stage:before{content:"";position:absolute;inset:2.8%;border:1px solid #c9a86a55;pointer-events:none}.scene-stage:after{content:"";position:absolute;inset:3.1%;border:1px solid #bd1e1e44;pointer-events:none}.horizon{position:absolute;inset:-8%;background:repeating-linear-gradient(132deg,transparent 0 35px,#c9a86a0d 36px,transparent 37px 72px);mask-image:linear-gradient(90deg,transparent,#000 65%);pointer-events:none}.scene-title{position:absolute;z-index:8;left:5.7%;top:8%;height:40%;padding-left:1.1%;border-left:2px solid var(--red);border-right:1px solid #c9a86a55;writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(23px,2.5vw,48px);font-weight:700;letter-spacing:.15em;line-height:1.2;text-shadow:2px 0 #bd1e1e66;pointer-events:none}.scene-title small{position:absolute;left:20%;bottom:-18%;writing-mode:horizontal-tb;font:11px/1 Arial,sans-serif;letter-spacing:.18em;color:var(--gold)}.narration{position:absolute;z-index:8;max-width:42%;font-size:clamp(12px,.95vw,18px);line-height:1.9;letter-spacing:.02em;color:#e8e2d2;pointer-events:none}.narration:before{content:"旁白　/　NARRATIVE";display:block;margin-bottom:9px;font:500 10px/1.4 Arial,sans-serif;letter-spacing:.16em;color:var(--gold)}.dialogue{position:absolute;z-index:12;width:min(40%,900px);min-height:8%;padding:1.2% 1.6%;display:flex;align-items:center;background:rgba(18,34,32,.92);border:1px solid rgba(30,123,117,.95);outline:1px solid rgba(201,168,106,.28);outline-offset:4px;color:var(--paper);font-size:clamp(12px,.94vw,18px);line-height:1.8;opacity:0;visibility:hidden;pointer-events:none;cursor:default;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility .2s}.dialogue:before{content:"";position:absolute;top:-1px;left:-1px;width:22px;height:2px;background:var(--red)}.narration[data-for="1"]{left:62.2%;top:71.9%;width:34.6%}.narration[data-for="2"]{left:60.6%;top:13%;width:34.6%}.narration[data-for="3"]{left:23.3%;top:73%;width:31%}.narration[data-for="4"]{left:19%;top:11.4%;width:31%}.narration[data-for="5"]{left:5.7%;top:76.1%;width:39.5%}.dialogue[data-pos="1x"]{left:32.2%;top:45%;width:31%;min-height:13.8%}.dialogue[data-pos="1y"]{left:39.8%;top:8%;width:31%;min-height:9.7%}.dialogue[data-pos="2x-first"]{left:12.6%;top:31.5%;width:37.4%;min-height:9.5%;text-align:center}.dialogue[data-pos="2x"]{left:57.3%;top:43.1%;width:41.1%;min-height:13.8%}.dialogue[data-pos="3x"]{left:23.3%;top:16.5%;width:41.1%;min-height:13.8%}.dialogue[data-pos="4x"]{left:57.4%;top:43.1%;width:41.1%;min-height:13.8%}.dialogue[data-pos="4y"]{left:2.2%;top:55.5%;width:41.1%;min-height:16.9%}.dialogue[data-pos="5x"]{left:70.9%;top:20.3%;width:25.9%;min-height:7.9%}.dialogue[data-pos="5y"]{left:42.5%;top:56.9%;width:44.5%;min-height:7.9%}.counter,.reading,.controls{position:fixed;z-index:30}.counter{left:clamp(14px,3vw,54px);bottom:clamp(14px,2.5vh,28px);display:flex;align-items:center;gap:13px;color:var(--gold);font:500 11px/1.4 Arial,sans-serif;letter-spacing:.15em}.counter-line{width:clamp(50px,8vw,150px);height:1px;background:#c9a86a44}.counter-line i{display:block;width:0;height:1px;background:var(--red);transition:width .5s}.reading{left:50%;bottom:clamp(17px,2.4vh,28px);transform:translateX(-50%);min-width:200px;text-align:center;color:var(--gold);font:500 11px/1.5 Arial,sans-serif;letter-spacing:.08em}.controls{right:clamp(14px,3vw,54px);bottom:clamp(12px,2vh,24px);display:flex;gap:8px}.controls button{width:42px;height:38px;border:1px solid #c9a86a55;background:#111114d9;cursor:pointer}.controls button:hover{background:#bd1e1e55;border-color:var(--gold)}.toast{position:fixed;z-index:40;left:50%;top:13%;transform:translate(-50%,-8px);max-width:90vw;padding:12px 18px;background:#16161af2;border:1px solid var(--gold);border-left:3px solid var(--red);font-size:13px;opacity:0;visibility:hidden;transition:.2s}.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}.logo{position:absolute;left:50%;top:36%;width:38%;height:30%;object-fit:contain;filter:brightness(0) invert(.9);transform:translate(-50%,-50%) }.opening-copy{position:absolute;left:9%;bottom:17%;z-index:8;}.opening-copy h1{font-size:clamp(22px,2.5vw,46px);font-weight:500;letter-spacing:.2em;margin:0 0 12px}.opening-copy p{font:12px/1.7 Arial,sans-serif;letter-spacing:.2em;color:var(--gold)}.scene[data-scene="0"] .scene-stage{background:radial-gradient(ellipse at 50% 42%,#292324,#141315 58%,#0b0b0d)}
+@media(max-width:760px){.scene-stage{width:min(100vw,177.7778vh);height:min(100vh,56.25vw)}.scene-title{left:3%;font-size:clamp(19px,4vw,32px)}.narration{max-width:44%}.reading{bottom:65px;width:90%;font-size:10px}.counter{bottom:17px}.controls{bottom:12px}.dialogue{width:48%;font-size:12px}.opening-copy{bottom:22%}}
+
+
+/* ===== V13 新增／覆蓋 ===== */
+.plane{position:absolute;display:block;max-width:none;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:fill}
+.z-back{z-index:1}.z-mid{z-index:2}.z-front{z-index:3}
+.scene-title,.narration{z-index:8}
+/* 熱區：透明、用多邊形裁出可點範圍。圖層拆好之後，把 .hot 換成圖層本身即可 */
+.hot{position:absolute;z-index:6;margin:0;padding:0;border:0;background:transparent;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.hot:focus-visible{background:rgba(201,168,106,.22);outline:none}
+body.debug .hot{background:rgba(255,40,40,.28)}
+.hint{position:absolute;z-index:7;width:26px;height:26px;margin:-13px 0 0 -13px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;animation:ring 1.6s ease-out infinite;box-shadow:0 0 14px #c9a86a88}
+.hint:after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--gold)}
+.hint.done{display:none}
+@keyframes ring{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.7);opacity:0}}
+.dialogue:before{content:"";position:absolute;top:-1px;left:-1px;width:22px;height:2px;background:var(--red)}
+.dialogue.on{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.scroll-hint{position:absolute;z-index:8;left:40%;top:84.9%;width:20%;display:flex;align-items:center;gap:12px;justify-content:center;color:var(--gold);font:500 12px/1.4 Arial,"Noto Serif TC",sans-serif;letter-spacing:.2em}
+.scroll-hint i{display:block;width:clamp(30px,3vw,56px);height:1px;background:var(--gold);position:relative}
+.scroll-hint i:after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-top:1px solid var(--gold);border-right:1px solid var(--gold);transform:rotate(45deg)}
+/* 第六幕 */
+.fig{position:absolute;z-index:2;left:-21.7%;top:-26.3%;width:126.25%;height:126.3%;pointer-events:none}
+.fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;user-select:none;-webkit-user-drag:none}
+/* 頭身分離（暫代）：目前用滿版圖裁出頭部。組員交出拆好的頭／身 PNG 後，把 .head、.body 的 src 換掉並刪除 clip-path 即可 */
+.fig .body{clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,19.8% 17.6%,36.5% 17.6%,36.5% 45.8%,19.8% 45.8%,19.8% 17.6%)}
+.fig .head{clip-path:inset(17.6% 63.5% 54.2% 19.8%);transform-origin:32% 46%;transition:transform 1.6s var(--ease)}
+.scene.cut .fig .head{transform:translate(-.9%,-3.2%) rotate(-6deg)}
+.slit{position:absolute;left:28%;top:45.5%;width:9%;height:.5%;background:linear-gradient(90deg,transparent,#ffe6ad,transparent);opacity:0;filter:blur(1px)}
+.scene.cut .slit{animation:slit 1.5s ease-out forwards}
+@keyframes slit{0%{opacity:0;transform:scaleX(.2)}25%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1.4)}}
+
+/* 頸部發光：柔光核心＋兩圈擴散漣漪＋一道斜向的光芒，不再用橢圓框與厚重陰影 */
+.neck-guide{position:absolute;z-index:5;left:32%;top:45.8%;width:5.2%;aspect-ratio:1;transform:translate(-50%,-50%);padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;pointer-events:auto;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;-webkit-tap-highlight-color:transparent}
+.scene.active:not(.cut) .neck-guide{opacity:1;visibility:visible}
+.neck-guide i{position:absolute;left:50%;top:50%;pointer-events:none;border-radius:50%}
+.ng-core{width:46%;height:46%;margin:-23% 0 0 -23%;background:radial-gradient(circle,#fffbe9 0,#ffe3a8 24%,rgba(255,196,120,.55) 48%,rgba(189,30,30,.18) 70%,transparent 78%);animation:breathe 2.2s ease-in-out infinite}
+.ng-ring{width:100%;height:100%;margin:-50% 0 0 -50%;border:1px solid rgba(255,230,173,.85);animation:ripple 2.4s ease-out infinite;opacity:0}
+.ng-ring.r2{animation-delay:1.2s}
+.ng-glint{width:230%;height:1px;margin:-.5px 0 0 -115%;border-radius:0;transform:rotate(-24deg);background:linear-gradient(90deg,transparent,rgba(255,236,190,.9) 50%,transparent);animation:glint 2.2s ease-in-out infinite}
+.neck-guide:hover .ng-core{filter:brightness(1.25)}
+.neck-guide:focus-visible{outline:1px solid var(--paper);outline-offset:6px}
+.ng-label{position:absolute;left:112%;top:50%;transform:translateY(-50%);white-space:nowrap;color:#fcd895;font:500 11px/1 Arial,"Noto Serif TC",sans-serif;letter-spacing:.2em;text-shadow:0 0 8px #000a;padding-left:22px;pointer-events:none}
+.ng-label:before{content:"";position:absolute;left:0;top:50%;width:16px;height:1px;background:linear-gradient(90deg,rgba(252,216,149,.9),transparent)}
+@keyframes breathe{0%,100%{transform:scale(.82);opacity:.8}50%{transform:scale(1.12);opacity:1}}
+@keyframes ripple{0%{transform:scale(.3);opacity:.9}100%{transform:scale(1);opacity:0}}
+@keyframes glint{0%,100%{opacity:.25}50%{opacity:.95}}
+/* 台詞：縮小，移到虞姬右側的空白處 */
+.last-line{position:absolute;z-index:9;left:50%;top:25%;width:20%;font-size:clamp(13px,1.25vw,24px);letter-spacing:.14em;line-height:1.6;color:var(--paper);text-shadow:0 0 14px #bd1e1e88;opacity:0;transition:opacity .9s ease}
+.scene.line .last-line{opacity:1}
+.end-credits{position:absolute;z-index:9;left:60.9%;top:60.2%;width:24%;font-size:clamp(12px,1vw,19px);line-height:2;letter-spacing:.08em;opacity:0;visibility:hidden;transition:opacity 1.4s ease,visibility 1.4s}
+.end-credits p{margin:0}
+.end-mark{position:absolute;z-index:9;left:87.1%;top:80.4%;color:var(--red);font-size:clamp(26px,2.6vw,50px);letter-spacing:.2em;opacity:0;visibility:hidden;transition:opacity 1.6s ease .5s,visibility 1.6s}
+.scene.credits .end-credits,.scene.credits .end-mark{opacity:1;visibility:visible}
+
+</style>
+</head>
+<body>
+<div class="viewport" id="viewport" aria-label="霸王別姬互動場景">
+<div class="world" id="world">
+<section class="scene active" data-scene="0" aria-label="序幕"><div class="scene-stage"><div class="horizon"></div><img class="logo" src="./標準字.PNG" alt="霸王別姬"><div class="opening-copy"><h1>霸王別姬</h1><p>FAREWELL, MY CONCUBINE　·　互動敘事</p></div><div class="scene-title">序幕<small>PROLOGUE</small></div><div class="scroll-hint"><span>滾動中鍵以推進劇情</span><i></i></div></div></section>
+<section class="scene" data-scene="1" aria-label="第一幕 霸王回營"><div class="scene-stage"><div class="horizon"></div><div class="scene-title">霸王回營<small>ACT 01</small></div><img class="plane z-back" src="./1/後景1.png" alt="" draggable="false" style="left:42.9%;top:12.9%;width:20.3%;height:24.9%"><img class="plane z-mid" src="./1/中景1虞姬.png" alt="" draggable="false" style="left:67.6%;top:12.9%;width:9.0%;height:33.4%"><img class="plane z-front" src="./1/前景1項羽.png" alt="" draggable="false" style="left:15.1%;top:10.5%;width:40.2%;height:88.9%"><button class="hot" data-role="yu" aria-label="點擊虞姬查看台詞" style="left:68.43%;top:12.90%;width:7.70%;height:32.56%;clip-path:polygon(0.0% 78.5%,2.8% 29.5%,18.9% 4.5%,21.6% 3.4%,40.5% 0.0%,67.6% 0.0%,70.3% 1.1%,91.9% 48.8%,94.6% 56.8%,97.3% 67.1%,100.0% 79.6%,100.0% 88.6%,94.6% 100.0%,70.3% 100.0%,21.6% 97.7%,18.9% 96.6%,10.9% 92.1%,0.0% 79.6%)"></button><i class="hint" data-role="yu" style="left:72.37%;top:31.43%"></i><button class="hot" data-role="xiang" aria-label="點擊項羽查看台詞" style="left:17.59%;top:14.59%;width:36.86%;height:80.28%;clip-path:polygon(0.0% 85.7%,0.5% 34.1%,19.8% 4.1%,20.4% 3.7%,28.8% 0.4%,34.5% 0.0%,39.6% 0.9%,46.3% 6.9%,98.4% 69.1%,99.5% 71.0%,100.0% 77.4%,96.6% 82.9%,94.3% 85.3%,83.6% 92.1%,57.7% 100.0%,57.0% 100.0%,7.4% 93.1%,0.0% 90.4%)"></button><i class="hint" data-role="xiang" style="left:35.71%;top:59.06%"></i><div class="dialogue" data-role="yu" data-pos="1y">「大王且請寬心，隨妾入帳飲酒解憂。」</div><div class="dialogue" data-role="xiang" data-pos="1x">「槍挑了漢營中數員將，怎奈他兵浩大難以抵擋……備酒！與虞姬同飲！」</div><p class="narration" data-for="1">垓下之戰楚軍受挫，項羽帶著滿身疲憊與憤懣回到大營。虞姬連忙迎接，見項羽心神不寧、深感大勢已去，趕緊吩咐備酒相陪，試圖以溫柔撫慰項羽的絕望。</p></div></section>
+<section class="scene" data-scene="2" aria-label="第二幕 四面楚歌"><div class="scene-stage"><div class="horizon"></div><div class="scene-title">四面楚歌<small>ACT 02</small></div><img class="plane z-back" src="./2/後景2虞姬.png" alt="" draggable="false" style="left:21.2%;top:35%;width:32%;height:42%"><img class="plane z-front" src="./2/前景2項羽.png" alt="" draggable="false" style="left:42.5%;top:44.3%;width:52.8%;height:48.8%"><button class="hot" data-role="yu" aria-label="點擊虞姬查看台詞" style="left:22.48%;top:39.20%;width:8.96%;height:37.38%;clip-path:polygon(0.0% 0.0%,100.0% 0.0%,100.0% 100.0%,0.0% 100.0%)"></button><i class="hint" data-role="yu" style="left:26.96%;top:57.89%"></i><button class="hot" data-role="xiang" aria-label="點擊項羽查看台詞" style="left:42.50%;top:44.30%;width:52.59%;height:48.51%;clip-path:polygon(0.0% 32.8%,7.5% 17.6%,7.9% 16.8%,33.7% 6.1%,49.2% 0.0%,50.4% 0.0%,82.5% 3.8%,100.0% 29.0%,100.0% 32.1%,93.3% 97.8%,91.7% 98.5%,82.1% 100.0%,81.7% 100.0%,29.0% 97.8%,5.9% 96.2%,4.0% 95.5%,3.6% 93.2%,0.0% 35.9%)"></button><i class="hint" data-role="xiang" style="left:66.54%;top:69.98%"></i><div class="dialogue" data-role="yu" data-pos="2x-first">「四面皆是楚歌，莫非楚國盡被漢兵所佔麼？」</div><div class="dialogue" data-role="xiang" data-pos="2x">【西皮二六】：「孤兵敗垓下，潰退無路……聽得帳外楚歌聲聲，莫非楚國已盡歸漢兵？」</div><p class="narration" data-for="2">深夜時分，包圍楚軍的漢營方向傳來陣陣楚鄉歌謠。項羽驚起，以為楚國領土已被劉邦全數攻佔、楚籍士卒皆已投降，內心最後的防線徹底崩塌。</p></div></section>
+<section class="scene" data-scene="3" aria-label="第三幕 霸王別馬"><div class="scene-stage"><div class="horizon"></div><div class="scene-title">霸王別馬<small>ACT 03</small></div><img class="plane z-back" src="./4/IMG_0521.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><img class="plane z-mid" src="./4/IMG_0519.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><img class="plane z-front" src="./4/IMG_0520.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><button class="hot" data-role="xiang" aria-label="點擊項羽查看台詞" style="left:49.40%;top:18.10%;width:36.00%;height:81.50%;clip-path:polygon(0.0% 25.0%,1.7% 21.0%,3.9% 16.9%,34.7% 1.0%,39.2% 0.0%,43.9% 0.0%,48.6% 1.0%,55.6% 5.5%,56.1% 6.0%,82.2% 35.1%,83.3% 36.8%,100.0% 90.6%,100.0% 91.9%,99.4% 92.3%,78.6% 100.0%,25.3% 100.0%,0.0% 26.9%)"></button><i class="hint" data-role="xiang" style="left:67.45%;top:49.26%"></i><div class="dialogue" data-role="xiang" data-pos="3x">「烏騅馬嘶鳴悲不肯上前……烏騅！想你隨孤出生入死，今日為何這般哽咽不前？」</div><p class="narration" data-for="3">項羽出帳巡視，靈性過人的坐騎烏騅馬感知到主人已陷絕境，發出淒厲嘶鳴、下跪蜷縮不肯上前。項羽撫馬痛嘆英雄末路，連相伴多年的戰馬都不忍隨他赴死。</p></div></section>
+<section class="scene" data-scene="4" aria-label="第四幕 垓下悲歌"><div class="scene-stage"><div class="horizon"></div><div class="scene-title">垓下悲歌<small>ACT 04</small></div><img class="plane z-mid" src="./5/IMG_0524.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><img class="plane z-front" src="./5/IMG_0523.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><button class="hot" data-role="yu" aria-label="點擊虞姬查看台詞" style="left:3.80%;top:69.30%;width:29.70%;height:30.30%;clip-path:polygon(0.0% 1.0%,0.7% 0.0%,35.7% 1.0%,100.0% 45.2%,96.0% 51.2%,60.9% 100.0%,38.4% 100.0%,24.9% 78.2%,20.9% 70.6%,0.0% 4.6%)"></button><i class="hint" data-role="yu" style="left:15.01%;top:82.99%"></i><button class="hot" data-role="xiang" aria-label="點擊項羽查看台詞" style="left:36.00%;top:5.90%;width:52.30%;height:93.70%;clip-path:polygon(0.0% 95.3%,2.1% 87.7%,2.5% 86.6%,6.9% 76.3%,8.4% 72.8%,25.6% 41.5%,48.8% 7.2%,49.5% 6.4%,64.2% 0.0%,66.5% 0.0%,75.7% 6.4%,88.5% 33.2%,100.0% 65.6%,98.1% 77.5%,93.3% 98.4%,7.6% 100.0%,4.0% 99.3%,0.0% 95.7%)"></button><i class="hint" data-role="xiang" style="left:57.56%;top:60.55%"></i><div class="dialogue" data-role="xiang" data-pos="4x">《垓下歌》：「力拔山兮氣蓋世，時不利兮騅不逝。騅不逝兮可奈何，虞兮虞兮奈若何！」</div><div class="dialogue" data-role="yu" data-pos="4y">【勸君王】：「勸君王飲酒聽虞歌，解君愁寂拌君坐。漢兵已略地，四方楚歌聲。大王意氣盡，賤妾何聊生！」</div><p class="narration" data-for="4">項羽唱出悲壯的《垓下歌》，虞姬為了寬解霸王愁緒，強忍悲痛起舞雙劍（配以經典曲牌【夜深沉】）。劍影交錯間，既展現了虞姬的深情與英姿，也隱含著她已下定決心殉情的壯烈。</p></div></section>
+<section class="scene" data-scene="5" aria-label="第五幕 美人自刎"><div class="scene-stage"><div class="horizon"></div><div class="scene-title">美人自刎<small>ACT 05</small></div><img class="plane z-mid" src="./6/IMG_0527.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><img class="plane z-front" src="./6/IMG_0526.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><button class="hot" data-role="xiang" aria-label="點擊項羽查看台詞" style="left:56.70%;top:5.90%;width:21.60%;height:42.60%;clip-path:polygon(0.0% 14.8%,0.9% 13.1%,1.9% 12.2%,3.7% 11.3%,57.9% 0.0%,70.4% 4.5%,71.3% 5.2%,90.3% 33.1%,93.5% 38.3%,100.0% 80.0%,100.0% 83.6%,97.2% 95.8%,95.4% 97.4%,79.2% 100.0%,57.9% 96.5%,31.5% 91.3%,8.3% 79.1%,0.0% 20.9%)"></button><i class="hint" data-role="xiang" style="left:68.21%;top:26.66%"></i><button class="hot" data-role="yu" aria-label="點擊虞姬查看台詞" style="left:12.30%;top:18.90%;width:41.70%;height:80.70%;clip-path:polygon(0.0% 59.6%,0.5% 58.2%,20.4% 10.5%,22.5% 9.2%,29.5% 5.1%,40.5% 2.2%,50.8% 0.0%,52.0% 0.0%,94.0% 10.0%,96.4% 11.4%,96.9% 11.9%,97.4% 18.3%,100.0% 78.4%,100.0% 80.8%,96.9% 91.8%,93.3% 100.0%,40.0% 100.0%,0.0% 60.1%)"></button><i class="hint" data-role="yu" style="left:36.19%;top:50.63%"></i><div class="dialogue" data-role="xiang" data-pos="5x">「不可！孤怎忍心見你身亡！」</div><div class="dialogue" data-role="yu" data-pos="5y">「大王，漢兵旦晚將至，乞賜寶劍，妾願自刎於王前！」</div><p class="narration" data-for="5">舞罷，虞姬知曉自己若隨軍突圍只會成為項羽的牽掛與負擔。她以「漢兵攻入」騙項羽轉身，順勢拔出項羽腰間的寶劍自刎，香消玉殞倒在霸王懷中，用生命為霸王掃清最後的後顧之憂。</p></div></section>
+<section class="scene" data-scene="6" aria-label="第六幕 美人自刎（動畫）"><div class="scene-stage"><div class="horizon"></div><img class="plane z-mid" src="./6/IMG_0527.PNG" alt="" draggable="false" style="left:18.3%;top:0;width:100%;height:100%"><div class="fig"><img class="body" src="./6/IMG_0526.PNG" alt="" draggable="false"><img class="head" src="./6/IMG_0526.PNG" alt="" draggable="false"><div class="slit"></div><button class="neck-guide" id="neckGuide" aria-label="點擊虞姬頸部"><i class="ng-ring"></i><i class="ng-ring r2"></i><i class="ng-glint"></i><i class="ng-core"></i><span class="ng-label">點擊虞姬頸部</span></button></div><div class="last-line">「大王，妾隨你去了！」</div><div class="end-credits"><p>美術／劇情設計　謝承邑</p><p>UI／程式設計　陳宥薰</p></div><div class="end-mark">終。</div></div></section>
+</div></div>
+<div class="counter"><span id="counter">序幕</span><span class="counter-line"><i id="progress"></i></span></div><div class="reading" id="reading"></div><div class="controls"><button id="back" aria-label="返回上一幕">←</button><button id="forward" aria-label="前往下一幕">→</button></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{'use strict';
+const LAST=6;
+const scenes=[...document.querySelectorAll('.scene')],world=document.getElementById('world'),toast=document.getElementById('toast');
+// 每一幕「必須點過」的角色。第六幕另有頸部引導。
+const required={1:['xiang','yu'],2:['xiang','yu'],3:['xiang'],4:['xiang','yu'],5:['xiang','yu']};
+const NAME={xiang:'項羽',yu:'虞姬'};
+const seen={};Object.keys(required).forEach(k=>seen[k]=new Set());
+let index=0,moving=false,lastWheel=0,timer=0,middle=null,cutState='idle'; // idle → playing → done
+const sc6=scenes[6];
+
+function say(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2200)}
+function missing(i){const r=required[i];return r?r.filter(p=>!seen[i].has(p)):[]}
+
+function update(){
+  const r=required[index];
+  document.getElementById('counter').textContent=index===0?'序幕':`第 0${index} 幕`;
+  document.getElementById('progress').style.width=`${index/LAST*100}%`;
+  let label='滾輪向上前進　·　向下返回';
+  if(r){const m=missing(index);label=m.length?`本幕角色已查看 ${seen[index].size} / ${r.length}　·　點擊發光圓圈查看台詞（尚未：${m.map(p=>NAME[p]).join('、')}）`:`本幕角色已全部查看　·　滾輪向上前進`}
+  if(index===LAST)label=cutState==='idle'?'第六幕：點擊虞姬頸部的發光處':cutState==='playing'?'':'《霸王別姬》　·　終';
+  document.getElementById('reading').textContent=label;
+}
+function render(){
+  scenes.forEach((s,i)=>{s.style.transform=`translateZ(${-i*1900}px)`;s.classList.toggle('active',i===index);s.setAttribute('aria-hidden',i===index?'false':'true')});
+  world.style.transform=`translateZ(${index*1900}px)`;update();
+}
+function blocked(){
+  const m=missing(index);
+  if(m.length){say(`請先點擊查看本幕角色（${seen[index].size}/${required[index].length}），還差：${m.map(p=>NAME[p]).join('、')}`);return true}
+  if(index===LAST){if(cutState==='idle')say('請點擊虞姬頸部的發光處。');return true}
+  return false;
+}
+function go(dir){
+  if(moving)return;
+  if(dir>0&&blocked())return;
+  const next=Math.max(0,Math.min(LAST,index+dir));if(next===index)return;
+  const old=index;scenes[old].classList.add('leaving');index=next;moving=true;render();
+  setTimeout(()=>{moving=false;scenes[old].classList.remove('leaving')},1550);
+}
+
+/* ===== 角色點擊：只有點擊才顯示台詞（不再有懸停顯示） ===== */
+function readRole(sceneEl,role){
+  const i=scenes.indexOf(sceneEl);if(i!==index||!role)return;
+  sceneEl.querySelectorAll(`.dialogue[data-role="${role}"]`).forEach(d=>d.classList.add('on'));
+  sceneEl.querySelectorAll(`[data-role="${role}"].hot,[data-role="${role}"].hint`).forEach(e=>e.classList.add('done'));
+  if(required[i]&&required[i].includes(role))seen[i].add(role);
+  update();
+}
+document.querySelectorAll('.hot').forEach(b=>b.addEventListener('click',()=>readRole(b.closest('.scene'),b.dataset.role)));
+
+/* ===== 第六幕：頸部發光 → 頭身分離 → 台詞 → 製作名單與「終。」 ===== */
+document.getElementById('neckGuide').addEventListener('click',()=>{
+  if(index!==LAST||cutState!=='idle')return;
+  cutState='playing';sc6.classList.add('cut');update();
+  setTimeout(()=>sc6.classList.add('line'),900);
+  setTimeout(()=>{sc6.classList.add('credits');cutState='done';update()},3200);
+});
+
+/* ===== 滾輪：向上＝前進、向下＝返回（維持原設計） ===== */
+document.getElementById('viewport').addEventListener('wheel',e=>{
+  e.preventDefault();if(moving)return;
+  const delta=Math.abs(e.deltaY)>2?e.deltaY:e.deltaX;if(Math.abs(delta)<2)return;
+  const now=performance.now();if(now-lastWheel<1450)return;lastWheel=now;go(delta<0?1:-1);
+},{passive:false});
+document.getElementById('forward').addEventListener('click',()=>go(1));
+document.getElementById('back').addEventListener('click',()=>go(-1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='h'||e.key==='H'){document.body.classList.toggle('debug');return}
+  if(['ArrowDown','PageDown'].includes(e.key)){e.preventDefault();go(1)}
+  else if(['ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(-1)}
+});
+document.addEventListener('mousedown',e=>{if(e.button===1){e.preventDefault();middle={y:e.clientY,moved:false};document.body.style.cursor='grabbing'}});
+document.addEventListener('mousemove',e=>{if(middle&&Math.abs(e.clientY-middle.y)>18)middle.moved=true});
+document.addEventListener('mouseup',e=>{if(!middle)return;const dy=e.clientY-middle.y;document.body.style.cursor='';if(middle.moved)go(dy<0?1:-1);middle=null});
+document.addEventListener('auxclick',e=>{if(e.button===1)e.preventDefault()});
+/* 觸控：手指向下滑＝前進（與滾輪方向一致） */
+let ty=null;const vp=document.getElementById('viewport');
+vp.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});
+vp.addEventListener('touchend',e=>{if(ty===null)return;const dy=e.changedTouches[0].clientY-ty;ty=null;if(Math.abs(dy)>60)go(dy>0?1:-1)},{passive:true});
+
+if(/[?&]debug/.test(location.search))document.body.classList.add('debug');
+render();
+})();
+
+</script>
+</body></html>
