@@ -133,6 +133,48 @@ body.debug .hot{background:rgba(255,40,40,.28)}
 @keyframes bleedIn{0%{opacity:0;transform:scale(.82)}10%{opacity:1}100%{opacity:1;transform:scale(1)}}
 @keyframes bleedMask{from{--bleed-r:0%}to{--bleed-r:19%}}
 @keyframes bleedBlur{0%{filter:blur(12px)}100%{filter:blur(0)}}
+
+/* ===== 手機相容（觸控裝置自動套用 html.lite；網址加 ?lite 可在電腦預覽）===== */
+html{overscroll-behavior:none;touch-action:manipulation;-webkit-text-size-adjust:100%}
+@supports (height:100dvh){.scene-stage{width:min(100vw,177.7778dvh);height:min(100dvh,56.25vw)}}
+/* 只支援橫放：直拿時蓋住畫面，提示轉橫向 */
+#rotateHint{display:none;position:fixed;inset:0;z-index:100;background:#0b0a0b;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;color:var(--paper)}
+#rotateHint p{margin:0;font-size:20px;letter-spacing:.2em}
+#rotateHint small{color:var(--gold);font:500 12px/1.4 Arial,sans-serif;letter-spacing:.2em}
+#rotateHint .ri{width:54px;height:92px;border:2px solid var(--gold);border-radius:10px;margin-bottom:8px;animation:rotPhone 2.6s ease-in-out infinite}
+@keyframes rotPhone{0%,25%{transform:rotate(0)}65%,100%{transform:rotate(-90deg)}}
+@media (orientation:portrait){.lite #rotateHint{display:flex}}
+/* 按鈕加大、避開瀏海／手勢列 */
+.lite .controls{right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));gap:12px}
+.lite .controls button{width:64px;height:54px;font-size:22px}
+.lite .counter{padding-left:env(safe-area-inset-left)}
+/* 沒有滑鼠懸停：未點過的角色外框輕輕閃爍提示可點擊，點過就消失 */
+.lite .hot:hover{background:transparent}
+.lite .hot:hover+.hot-outline{opacity:0}
+.lite .hot:not(.done)+.hot-outline{opacity:.7;animation:hotPulse 2.2s ease-in-out infinite}
+@keyframes hotPulse{0%,100%{opacity:.25}50%{opacity:.9}}
+/* 簡化特效，優先保證流暢 */
+.lite .ink-grain{animation:none;opacity:.26}
+.lite .ink-layer.wisp{display:none}
+.lite .opening-copy .wordmark{filter:none}
+.lite .bleed{filter:none}
+.lite .scene.cut .bleed img{animation:bleedMask 2.6s cubic-bezier(.25,.6,.3,1) forwards}
+/* 手機橫放（螢幕高度小）：縮小文字，避免台詞框與註解蓋住角色 */
+@media (max-height:500px) and (pointer:coarse){
+  .dialogue{font-size:10.5px;line-height:1.5;min-height:0;padding:.9% 1.4%}
+  .narration{font-size:10px;line-height:1.7;max-width:40%}
+  .narration:before{font-size:8px}
+  .scene-title{font-size:clamp(17px,3.2vw,26px)}
+  .scene-title small{font-size:9px}
+  .opening-copy p{font-size:9px;letter-spacing:.14em}
+  .scroll-hint{font-size:10px}
+  .last-line{font-size:13px}
+  .end-credits{font-size:10px;line-height:1.8}
+  .end-mark{font-size:24px}
+  .reading{font-size:9.5px;bottom:8px}
+  .counter{bottom:10px}
+  .toast{font-size:11px;padding:8px 12px}
+}
 </style>
 </head>
 <body>
@@ -146,10 +188,12 @@ body.debug .hot{background:rgba(255,40,40,.28)}
 <section class="scene" data-scene="5" aria-label="第五幕 美人自刎"><div class="scene-stage"><div class="horizon"></div><div class="scene-title">美人自刎<small>ACT 05</small></div><img class="plane z-mid p-xiang6" src="./6/IMG_0527.PNG" alt="" draggable="false" style="left:0%;top:0%;width:100%;height:100%"><div class="fig"><img class="body" src="./6/IMG_0526.PNG" alt="" draggable="false"><div class="bleed" aria-hidden="true"><img src="./6/bleed.png" alt="" draggable="false"></div><button class="neck-guide" id="neckGuide" aria-label="點擊虞姬頸部"><i class="ng-ring"></i><i class="ng-ring r2"></i><i class="ng-glint"></i><i class="ng-core"></i><span class="ng-label">點擊虞姬頸部</span></button></div><button class="hot" data-role="xiang" aria-label="點擊項羽查看台詞" style="left:56.70%;top:5.90%;width:21.60%;height:42.60%;clip-path:polygon(0.0% 14.8%,0.9% 13.1%,1.9% 12.2%,3.7% 11.3%,57.9% 0.0%,70.4% 4.5%,71.3% 5.2%,90.3% 33.1%,93.5% 38.3%,100.0% 80.0%,100.0% 83.6%,97.2% 95.8%,95.4% 97.4%,79.2% 100.0%,57.9% 96.5%,31.5% 91.3%,8.3% 79.1%,0.0% 20.9%)"></button><svg class="hot-outline" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="left:56.70%;top:5.90%;width:21.60%;height:42.60%"><polygon points="0.0,14.8 0.9,13.1 1.9,12.2 3.7,11.3 57.9,0.0 70.4,4.5 71.3,5.2 90.3,33.1 93.5,38.3 100.0,80.0 100.0,83.6 97.2,95.8 95.4,97.4 79.2,100.0 57.9,96.5 31.5,91.3 8.3,79.1 0.0,20.9"/></svg><i class="hint" data-role="xiang" style="left:68.21%;top:26.66%"></i><button class="hot" data-role="yu" aria-label="點擊虞姬查看台詞" style="left:12.30%;top:18.90%;width:41.70%;height:80.70%;clip-path:polygon(0.0% 59.6%,0.5% 58.2%,20.4% 10.5%,22.5% 9.2%,29.5% 5.1%,40.5% 2.2%,50.8% 0.0%,52.0% 0.0%,94.0% 10.0%,96.4% 11.4%,96.9% 11.9%,97.4% 18.3%,100.0% 78.4%,100.0% 80.8%,96.9% 91.8%,93.3% 100.0%,40.0% 100.0%,0.0% 60.1%)"></button><svg class="hot-outline" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none" style="left:12.30%;top:18.90%;width:41.70%;height:80.70%"><polygon points="0.0,59.6 0.5,58.2 20.4,10.5 22.5,9.2 29.5,5.1 40.5,2.2 50.8,0.0 52.0,0.0 94.0,10.0 96.4,11.4 96.9,11.9 97.4,18.3 100.0,78.4 100.0,80.8 96.9,91.8 93.3,100.0 40.0,100.0 0.0,60.1"/></svg><i class="hint" data-role="yu" style="left:36.19%;top:50.63%"></i><div class="dialogue" data-role="xiang" data-pos="5x">「不可！孤怎忍心見你身亡！」</div><div class="dialogue" data-role="yu" data-pos="5y">「大王，漢兵旦晚將至，乞賜寶劍，妾願自刎於王前！」</div><p class="narration" data-for="5">舞罷，虞姬知曉自己若隨軍突圍只會成為項羽的牽掛與負擔。她以「漢兵攻入」騙項羽轉身，順勢拔出項羽腰間的寶劍自刎，香消玉殞倒在霸王懷中，用生命為霸王掃清最後的後顧之憂。</p><div class="last-line">「大王，妾隨你去了！」</div><div class="end-credits"><p>美術／劇情設計　謝承邑</p><p>UI／程式設計　陳宥薰</p></div><div class="end-mark">終。</div></div></section>
 
 </div></div>
-<div class="counter"><span id="counter">序幕</span><span class="counter-line"><i id="progress"></i></span></div><div class="reading" id="reading"></div><div class="controls"><button id="back" aria-label="返回上一幕">←</button><button id="forward" aria-label="前往下一幕">→</button></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="counter"><span id="counter">序幕</span><span class="counter-line"><i id="progress"></i></span></div><div class="reading" id="reading"></div><div class="controls"><button id="back" aria-label="返回上一幕">←</button><button id="forward" aria-label="前往下一幕">→</button></div><div id="rotateHint" role="alert"><div class="ri"></div><p>請將手機轉為橫向</p><small>本作品需橫向觀看</small></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="inkSpread" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.011 0.015" numOctaves="3" seed="6" result="n"/><feDisplacementMap id="inkDisp" in="SourceGraphic" in2="n" scale="110" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 <script>
 (()=>{'use strict';
+const lite=(window.matchMedia&&matchMedia('(pointer:coarse)').matches)||/[?&]lite/.test(location.search); // 手機／平板：簡化特效、停用滑動
+if(lite)document.documentElement.classList.add('lite');
 const LAST=5;
 const scenes=[...document.querySelectorAll('.scene')],world=document.getElementById('world'),toast=document.getElementById('toast');
 // 每一幕「必須點過」的角色。第六幕另有頸部引導。
@@ -168,8 +212,8 @@ function update(){
   const act=index+(index===LAST&&phase6?1:0);
   document.getElementById('counter').textContent=index===0?'序幕':`第 0${act} 幕`;
   document.getElementById('progress').style.width=`${act/6*100}%`;
-  let label='滾輪向上前進　·　向下返回';
-  if(r){const m=missing(index);label=m.length?`本幕角色已查看 ${seen[index].size} / ${r.length}　·　點擊發光圓圈查看台詞（尚未：${m.map(p=>NAME[p]).join('、')}）`:`本幕角色已全部查看　·　滾輪向上前進`}
+  let label=lite?'點擊右下角 ← → 切換幕次':'滾輪向上前進　·　向下返回';
+  if(r){const m=missing(index);label=m.length?`本幕角色已查看 ${seen[index].size} / ${r.length}　·　點擊角色查看台詞（尚未：${m.map(p=>NAME[p]).join('、')}）`:(lite?`本幕角色已全部查看　·　點擊右下角 →`:`本幕角色已全部查看　·　滾輪向上前進`)}
   if(index===LAST){
     if(!phase6)label=missing(index).length?label:'本幕角色已全部查看　·　即將進入第六幕…';
     else label=transitioning?'':cutState==='idle'?'第六幕：點擊虞姬頸部的發光處':cutState==='playing'?'':'《霸王別姬》　·　終';
@@ -215,7 +259,8 @@ function scheduleTo6(){
     setTimeout(()=>{sc6.classList.add('split','neck-ready');transitioning=false;update()},1800);
   },1200);
 }
-function inkSpread(){ // 血跡邊緣由「流動的位移」逐漸收斂成清晰，營造水墨暈開的感覺
+function inkSpread(){
+  if(lite)return; // 手機：改用單純的遮罩擴散，不跑 SVG 濾鏡 // 血跡邊緣由「流動的位移」逐漸收斂成清晰，營造水墨暈開的感覺
   const disp=document.getElementById('inkDisp'),el=sc6.querySelector('.bleed');if(!disp||!el)return;
   const t0=performance.now(),D=2600;
   (function f(now){const p=Math.min(1,((now||t0)-t0)/D),e=1-Math.pow(1-p,3);
@@ -256,12 +301,9 @@ document.addEventListener('mousedown',e=>{if(e.button===1){e.preventDefault();mi
 document.addEventListener('mousemove',e=>{if(middle&&Math.abs(e.clientY-middle.y)>18)middle.moved=true});
 document.addEventListener('mouseup',e=>{if(!middle)return;const dy=e.clientY-middle.y;document.body.style.cursor='';if(middle.moved)go(dy<0?1:-1);middle=null});
 document.addEventListener('auxclick',e=>{if(e.button===1)e.preventDefault()});
-/* 觸控：手指向下滑＝前進（與滾輪方向一致） */
-let ty=null;const vp=document.getElementById('viewport');
-vp.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});
-vp.addEventListener('touchend',e=>{if(ty===null)return;const dy=e.changedTouches[0].clientY-ty;ty=null;if(Math.abs(dy)>60)go(dy>0?1:-1)},{passive:true});
 
 if(/[?&]debug/.test(location.search))document.body.classList.add('debug');
+if(lite){const sh=document.querySelector('.scroll-hint span');if(sh)sh.textContent='點擊右下角 → 開始';}
 render();
 })();
 
